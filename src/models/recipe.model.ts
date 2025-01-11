@@ -7,6 +7,15 @@ const Recipe = db.define("recipe", {
     defaultValue: DataTypes.UUIDV4,
     primaryKey: true,
   },
+  title: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true,
+  },
+  description: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
 });
 
 export default Recipe;
