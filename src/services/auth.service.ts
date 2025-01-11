@@ -1,5 +1,7 @@
 import bcrypt from "bcrypt";
 import { Request, Response } from "express";
+import jwt from "jsonwebtoken";
+import Config from "../config/config";
 import db from "../db/db";
 import { UserModel } from "../models";
 
@@ -54,4 +56,35 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-export default { createUser };
+const login = async (req: Request, res: Response) => {
+  const { email, password } = req.body;
+  const { secret } = Config;
+  try {
+    const user = await UserModel.findOne({ where: { email } });
+
+    if (!user)
+      return res.status(404).send({ message: "Usuario no encontrado" });
+
+    const isSamePassword = bcrypt.compare(
+      password,
+      user.getDataValue("password")
+    );
+
+    if (!isSamePassword)
+      return res.status(404).json({
+        msg: "Contraseña incorrecta",
+      });
+
+    const token = jwt.sign({ id: user.getDataValue("id") }, secret);
+
+    const name = user.getDataValue("name");
+    const lastname = user.getDataValue("lastname");
+
+    res.status(200).send({
+      user: { name, lastname, email },
+      token,
+    });
+  } catch (error) {}
+};
+
+export default { createUser, login };
