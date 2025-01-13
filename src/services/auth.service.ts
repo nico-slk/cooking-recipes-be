@@ -48,15 +48,17 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
     res.json({
       msg: "¡Usuario registrado!",
     });
-  } catch (err: unknown) {
-    res.status(500).json({
-      message: "Error inesperado del servidor",
-      error: err instanceof Error ? err.message : err,
-    });
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).json({
+        message: "Error inesperado del servidor",
+        error: err instanceof Error ? err.message : err,
+      });
+    }
   }
 };
 
-const login = async (req: Request, res: Response) => {
+const login = async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
   const { secret } = Config;
   try {
@@ -77,14 +79,22 @@ const login = async (req: Request, res: Response) => {
 
     const token = jwt.sign({ id: user.getDataValue("id") }, secret);
 
+    const id = user.getDataValue("id");
     const name = user.getDataValue("name");
     const lastname = user.getDataValue("lastname");
 
     res.status(200).send({
-      user: { name, lastname, email },
+      user: { id, name, lastname, email },
       token,
     });
-  } catch (error) {}
+  } catch (err) {
+    if (err instanceof Error) {
+      res.status(500).json({
+        message: "Error inesperado del servidor",
+        error: err instanceof Error ? err.message : err,
+      });
+    }
+  }
 };
 
 export default { createUser, login };

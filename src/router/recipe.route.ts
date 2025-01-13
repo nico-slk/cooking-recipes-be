@@ -1,11 +1,26 @@
 import { Router } from "express";
+import { ValidJWT } from "../lodash";
 import { RecipeService } from "../services";
 
 const router = Router();
+const { validJwt } = ValidJWT;
 
-const { getRecipe, createRecipe, updateRecipe, deleteRecipe } = RecipeService;
+const {
+  getRecipe,
+  getAllRecipes,
+  createRecipe,
+  updateRecipe,
+  deleteRecipe,
+  findRecipeByCategories,
+  findRecipesByUserId,
+} = RecipeService;
 
-router.get("/", getRecipe);
-router.post("/", createRecipe);
-router.put("/:recipeId", updateRecipe);
-router.delete("/:recipeId", deleteRecipe);
+router.get("/:recipeId", getRecipe); // ✅
+router.get("/", getAllRecipes); // ✅
+router.get("/user/recipe", validJwt, findRecipesByUserId); // El id se envía por decode // ✅
+router.post("/", validJwt, createRecipe); // El id se envía por decode // ✅
+router.post("/category", findRecipeByCategories); // ✅
+router.put("/:recipeId", validJwt, updateRecipe); // ✅
+router.delete("/:recipeId", validJwt, deleteRecipe); // ✅
+
+export default router;

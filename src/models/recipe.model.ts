@@ -16,6 +16,10 @@ const Recipe = db.define("recipe", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  category: {
+    type: DataTypes.ENUM("DESAYUNO", "ALMUERZO", "MERIENDA", "CENA"),
+    allowNull: false,
+  },
 });
 
 export default Recipe;
