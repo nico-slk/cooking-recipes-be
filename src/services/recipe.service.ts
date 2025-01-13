@@ -1,11 +1,13 @@
 import { Request, Response } from "express";
 import db from "../db/db";
-import { capitalizeWord } from "../lodash/string-manager";
+import { StringManager } from "../lodash";
 import {
   IngredientsModel,
   RecipeIngredientsModel,
   RecipeModel,
 } from "../models";
+
+const { capitalizeWord } = StringManager;
 
 const getRecipe = async (req: Request, res: Response): Promise<any> => {
   const { recipeId } = req.params;
@@ -44,6 +46,7 @@ const getRecipe = async (req: Request, res: Response): Promise<any> => {
       });
 
     recipe.setDataValue("ingredients", ingredients);
+
     delete recipe.dataValues.recipe_ingredients;
 
     res.status(200).send({
