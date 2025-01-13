@@ -26,8 +26,16 @@ export class Server {
   async dbConnection() {
     try {
       await db.authenticate();
-      // await db.sync({ alter: true });
-      await db.sync({ force: true });
+      await db
+        // .sync({ force: true })
+        .sync({ alter: true })
+        // .sync()
+        .then(() => {
+          console.log("Modelos sincronizados");
+        })
+        .catch((error) => {
+          console.error("Error al sincronizar la base de datos:", error);
+        });
       // await db.sync();
     } catch (error) {
       throw new Error(error as string);

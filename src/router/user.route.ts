@@ -1,11 +1,12 @@
 import { Router } from "express";
+import { ValidJWT } from "../lodash";
 import { UserService } from "../services";
 
 const router = Router();
+const { validJwt } = ValidJWT;
 
-const { getUser, testUser } = UserService;
+const { getUser } = UserService;
 
-router.get("/:id", getUser);
-router.get("/", testUser);
+router.get("/", validJwt, getUser);
 
 export default router;

@@ -2,7 +2,9 @@ import { Request, Response } from "express";
 import { UserModel } from "../models";
 
 const getUser = async (req: Request, res: Response): Promise<any> => {
+  console.log(req.body);
   const { id } = req.body.decoded;
+
   try {
     const user = await UserModel.findByPk(id);
     if (!user) {
@@ -10,6 +12,8 @@ const getUser = async (req: Request, res: Response): Promise<any> => {
         message: "Usuario no encontrado.",
       });
     }
+
+    delete user.dataValues.password;
 
     res.status(200).send(user);
   } catch (err) {
@@ -24,8 +28,4 @@ const getUser = async (req: Request, res: Response): Promise<any> => {
   }
 };
 
-const testUser = async (req: Request, res: Response): Promise<any> => {
-  return res.send("Test user");
-};
-
-export default { getUser, testUser };
+export default { getUser };
