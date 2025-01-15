@@ -2,7 +2,6 @@ import { Request, Response } from "express";
 import { UserModel } from "../models";
 
 const getUser = async (req: Request, res: Response): Promise<any> => {
-  console.log(req.body);
   const { id } = req.body.decoded;
 
   try {

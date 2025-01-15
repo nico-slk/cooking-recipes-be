@@ -49,10 +49,7 @@ const getRecipe = async (req: Request, res: Response): Promise<any> => {
 
     delete recipe.dataValues.recipe_ingredients;
 
-    res.status(200).send({
-      message: "Receta encontrada",
-      recipe,
-    });
+    res.status(200).send(recipe);
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({
@@ -80,10 +77,7 @@ const getAllRecipes = async (req: Request, res: Response): Promise<any> => {
       });
     }
 
-    res.status(200).send({
-      message: "Recetas encontradas.",
-      recipes,
-    });
+    res.status(200).send(recipes);
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({
@@ -141,10 +135,7 @@ const createRecipe = async (req: Request, res: Response): Promise<any> => {
       });
     }
 
-    res.status(200).send({
-      message: "Receta creada",
-      recipe,
-    });
+    res.status(200).send(recipe);
     await transaction.commit();
   } catch (err) {
     await transaction.rollback();
@@ -184,9 +175,9 @@ const updateRecipe = async (req: Request, res: Response): Promise<any> => {
     );
 
     // Obtengo todos los ingredientes que pertecenen a esa receta
-    const allIingredients = await RecipeIngredientsModel.findAll({
-      where: { recipeId },
-    });
+    // const allIingredients = await RecipeIngredientsModel.findAll({
+    //   where: { recipeId },
+    // });
 
     // Elimino todos los ingredientes que pertenecen a esa receta
     // await allIingredients.forEach(async () => {
@@ -297,10 +288,7 @@ const findRecipeByCategories = async (
       });
     }
 
-    res.status(200).send({
-      message: "Recetas encontradas.",
-      recipes,
-    });
+    res.status(200).send(recipes);
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({
@@ -329,10 +317,7 @@ const findRecipesByUserId = async (
       });
     }
 
-    res.status(200).send({
-      message: "Recetas encontradas.",
-      recipes,
-    });
+    res.status(200).send(recipes);
   } catch (err) {
     if (err instanceof Error) {
       res.status(500).json({
