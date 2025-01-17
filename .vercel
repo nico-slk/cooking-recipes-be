@@ -1,8 +1,7 @@
 {
-  "version": 2,
   "builds": [
     {
-      "src": "package.json",
+      "src": "index.ts",
       "use": "@vercel/node"
     }
   ],
@@ -11,17 +10,5 @@
       "src": "/(.*)",
       "dest": "/dist/index.js"
     }
-  ],
-  "env": {
-    "PORT_DB": "3306",
-    "MYSQL_DATABASE": "railway",
-    "MYSQL_PUBLIC_URL": "mysql://root:fNgPWHIvmUgeatNjAzvJDUpgBfzjvxLX@viaduct.proxy.rlwy.net:35853/railway",
-    "MYSQL_ROOT_PASSWORD": "fNgPWHIvmUgeatNjAzvJDUpgBfzjvxLX",
-    "MYSQL_URL": "mysql://root:fNgPWHIvmUgeatNjAzvJDUpgBfzjvxLX@mysql.railway.internal:3306/railway",
-    "MYSQLDATABASE": "railway",
-    "MYSQLHOST": "mysql.railway.internal",
-    "MYSQLPASSWORD": "fNgPWHIvmUgeatNjAzvJDUpgBfzjvxLX",
-    "MYSQLPORT": "3306",
-    "MYSQLUSER": "root"
-  }
+  ]
 }
