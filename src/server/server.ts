@@ -27,8 +27,8 @@ export class Server {
     try {
       await db.authenticate();
       await db
-        // .sync({ force: true })
-        .sync({ alter: true })
+        .sync({ force: true })
+        // .sync({ alter: true })
         // .sync()
         .then(() => {
           console.log("Modelos sincronizados");

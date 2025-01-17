@@ -20,6 +20,9 @@ const Recipe = db.define("recipe", {
     type: DataTypes.ENUM("DESAYUNO", "ALMUERZO", "MERIENDA", "CENA"),
     allowNull: false,
   },
+  image: {
+    type: DataTypes.TEXT("long"),
+  },
 });
 
 export default Recipe;

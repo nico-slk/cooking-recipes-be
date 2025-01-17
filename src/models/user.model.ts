@@ -21,6 +21,10 @@ const User = db.define("user", {
     unique: true,
     allowNull: false,
   },
+  photo: {
+    type: DataTypes.TEXT("long"),
+    allowNull: false,
+  },
   password: {
     type: DataTypes.STRING,
     allowNull: false,

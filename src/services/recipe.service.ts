@@ -99,7 +99,7 @@ const createRecipe = async (req: Request, res: Response): Promise<any> => {
   const transaction = await db.transaction();
   const { id } = req.body.decoded;
   // ingredients es un array de objetos [ {...}, {name, quantity, unit}, {...}]
-  const { ingredients, title, description, category } = req.body;
+  const { ingredients, title, description, category, image } = req.body;
 
   try {
     // Si no encuentra la receta, la crea
@@ -108,6 +108,7 @@ const createRecipe = async (req: Request, res: Response): Promise<any> => {
       description,
       user_id: id,
       category,
+      image,
     });
 
     if (!recipe) {
@@ -139,6 +140,8 @@ const createRecipe = async (req: Request, res: Response): Promise<any> => {
     await transaction.commit();
   } catch (err) {
     await transaction.rollback();
+    console.error(err);
+
     if (err instanceof Error) {
       res.status(500).json({
         message: "Error inesperado del servidor",

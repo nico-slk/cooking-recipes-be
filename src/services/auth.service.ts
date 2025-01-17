@@ -11,7 +11,7 @@ const { capitalizeWord } = StringManager;
 const createUser = async (req: Request, res: Response): Promise<any> => {
   const transaction = await db.transaction();
   try {
-    let { name, lastname, email, password, repassword } = req.body;
+    let { name, lastname, email, photo, password, repassword } = req.body;
 
     if (password !== repassword)
       return res.status(400).send({
@@ -26,7 +26,7 @@ const createUser = async (req: Request, res: Response): Promise<any> => {
     password = await bcrypt.hash(password, 12);
 
     await UserModel.create(
-      { name, lastname, email, password },
+      { name, lastname, email, password, photo },
       { transaction }
     );
 
@@ -68,9 +68,10 @@ const login = async (req: Request, res: Response): Promise<any> => {
     const id = user.getDataValue("id");
     const name = user.getDataValue("name");
     const lastname = user.getDataValue("lastname");
+    const photo = user.getDataValue("photo");
 
     res.status(200).send({
-      user: { id, name, lastname, email },
+      user: { id, name, lastname, email, photo },
       token,
     });
   } catch (err) {
